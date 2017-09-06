@@ -14,6 +14,6 @@ import retrofit2.http.GET;
  */
 
 public interface RandomService {
-@GET("/random/data/"+ HttpModel.CATEGORT_ALL+"/20")
+@GET("random/data/"+ HttpModel.CATEGORT_ALL+"/20")
     Call<BaseBean<List<CategoryBean>>> getRandom();
 }

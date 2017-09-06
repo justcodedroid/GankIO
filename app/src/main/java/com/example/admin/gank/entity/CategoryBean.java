@@ -1,21 +1,27 @@
 package com.example.admin.gank.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.List;
+
 /**
  * Created by admin on 2017/9/5.
  */
 
-public class CategoryBean {
+public class CategoryBean implements Parcelable {
 
     /**
-     * _id : 59ac06be421aa901c85e6006
-     * createdAt : 2017-09-03T21:42:22.920Z
-     * desc : 如何自己实现一个 EventBus
-     * publishedAt : 2017-09-05T11:29:05.240Z
+     * _id : 599e81e1421aa901bcb7db9c
+     * createdAt : 2017-08-24T15:36:01.827Z
+     * desc : 召唤，光能使者--玩转PathMeasure
+     * images : ["http://img.gank.io/f2ab16f6-68f7-4030-adcb-d2cccced9c9f"]
+     * publishedAt : 2017-09-06T12:18:11.687Z
      * source : web
      * type : Android
-     * url : https://github.com/Werb/EventBusKotlin/wiki/%E5%A6%82%E4%BD%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA-EventBus
+     * url : http://www.jianshu.com/p/4bb16cefca23
      * used : true
-     * who : Werb
+     * who : Vivian
      */
 
     private String _id;
@@ -27,6 +33,32 @@ public class CategoryBean {
     private String url;
     private boolean used;
     private String who;
+    private List<String> images;
+
+    protected CategoryBean(Parcel in) {
+        _id = in.readString();
+        createdAt = in.readString();
+        desc = in.readString();
+        publishedAt = in.readString();
+        source = in.readString();
+        type = in.readString();
+        url = in.readString();
+        used = in.readByte() != 0;
+        who = in.readString();
+        images = in.createStringArrayList();
+    }
+
+    public static final Creator<CategoryBean> CREATOR = new Creator<CategoryBean>() {
+        @Override
+        public CategoryBean createFromParcel(Parcel in) {
+            return new CategoryBean(in);
+        }
+
+        @Override
+        public CategoryBean[] newArray(int size) {
+            return new CategoryBean[size];
+        }
+    };
 
     public void set_id(String _id) {
         this._id = _id;
@@ -64,6 +96,10 @@ public class CategoryBean {
         this.who = who;
     }
 
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
     public String get_id() {
         return _id;
     }
@@ -98,5 +134,28 @@ public class CategoryBean {
 
     public String getWho() {
         return who;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(createdAt);
+        dest.writeString(desc);
+        dest.writeString(publishedAt);
+        dest.writeString(source);
+        dest.writeString(type);
+        dest.writeString(url);
+        dest.writeByte((byte) (used ? 1 : 0));
+        dest.writeString(who);
+        dest.writeStringList(images);
     }
 }

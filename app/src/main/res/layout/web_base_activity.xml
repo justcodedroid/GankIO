@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    app:titleTextColor="#fff"
+    app:navigationIcon="@mipmap/back"
+    app:titleMarginStart="10dp"
+    app:titleMarginTop="40dp"
+    app:buttonGravity="bottom"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="81dp"></android.support.v7.widget.Toolbar>
+ <ProgressBar
+     android:id="@+id/pb"
+     android:max="100"
+     style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+     android:layout_width="match_parent"
+     android:layout_height="2dp" />
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+</LinearLayout>

@@ -14,8 +14,8 @@ import retrofit2.http.Path;
  */
 
 public interface HistoryService {
-    @GET("/day/history")
+    @GET("day/history")
     Call<BaseBean<List<String>>> getHistoryDate();
-    @GET("/day/{year}/{month}/{day}")
+    @GET("day/{year}/{month}/{day}")
     Call<BaseBean<ResponseBody>> getRawHistoryData(@Path("year")int year,@Path("month") int month,@Path("day") int day);
 }

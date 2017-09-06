@@ -2,6 +2,8 @@ package com.example.admin.gank.listener;
 
 
 
+import android.util.Log;
+
 import com.example.admin.gank.entity.BaseBean;
 import com.example.admin.gank.http.ErrorModel;
 
@@ -34,6 +36,8 @@ public class SimpleCallBack<T extends BaseBean>  implements Callback<T> {
             }
         }else {
             try {
+                Log.e("tagurl",call.request().url().toString());
+
                 listener.onFailed(response.errorBody().string(),response.code());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -45,5 +49,5 @@ public class SimpleCallBack<T extends BaseBean>  implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         listener.onFailed(t.getMessage(),ErrorModel.HTTP_API_ERROR_CODE);
-    }
+     }
 }

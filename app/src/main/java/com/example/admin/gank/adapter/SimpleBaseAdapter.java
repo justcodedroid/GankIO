@@ -49,7 +49,8 @@ public abstract class SimpleBaseAdapter<T> extends BaseAdapter {
             list.clear();
         }else {
             list.addAll(datas);
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
+
     }
 }
