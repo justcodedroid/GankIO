@@ -1,8 +1,10 @@
 package com.example.admin.gank.adapter;
 
+import android.text.Spanned;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,5 +56,18 @@ public class BaseHolder {
         if(tv!=null){
             tv.setText(text);
         }
+    }  public void setText(int id,Spanned text){
+        TextView tv = (TextView) findViewById(id);
+        if(tv!=null){
+            tv.setText(text);
+        }
+    }
+
+    public void setWebUrl(int readWeb, String htmlPart) {
+        WebView wv = (WebView) findViewById(readWeb);
+        if(wv!=null){
+wv.loadDataWithBaseURL(null,htmlPart,"text/html","UTF-8",null);
+        }
+
     }
 }

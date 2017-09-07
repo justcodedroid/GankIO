@@ -1,5 +1,8 @@
 package com.example.admin.gank.http;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.example.admin.gank.entity.BaseBean;
 import com.example.admin.gank.entity.CategoryBean;
 import com.example.admin.gank.entity.SearchBean;
@@ -9,8 +12,13 @@ import com.example.admin.gank.service.CategoryService;
 import com.example.admin.gank.service.HistoryService;
 import com.example.admin.gank.service.RandomService;
 import com.example.admin.gank.service.SearchService;
+import com.example.admin.gank.utils.SqliteUtilsHelper;
+import com.sina.weibo.sdk.api.share.Base;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -22,6 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpUtils {
     private static Retrofit retrofit;
+    private static ExecutorService POOL= Executors.newSingleThreadExecutor();
+    private static Handler handler=new Handler(Looper.getMainLooper());
     static {
         retrofit=new Retrofit.Builder().baseUrl(HttpModel.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
     }
@@ -39,6 +49,29 @@ public class HttpUtils {
     }
     public static void getSearch(String keyword,int page, SimpleResponseListener<BaseBean<List<SearchBean>>> listener){
         retrofit.create(SearchService.class).getSearchBean(keyword,page).enqueue(new SimpleCallBack<BaseBean<List<SearchBean>>>(listener));
+    }
+    public static void getCollection(final int page, final SimpleResponseListener<BaseBean<List<CategoryBean>>> listSimpleResponseListener){
+        POOL.submit(new Runnable() {
+            @Override
+            public void run() {
+               try{
+                   final BaseBean<List<CategoryBean>> categoryBean = SqliteUtilsHelper.getInstance().getCategoryBean(page);
+                   handler.post(new Runnable() {
+                       @Override
+                       public void run() {
+                           listSimpleResponseListener.onSuccess(categoryBean);
+                       }
+                   });
+               }catch (final Exception e){
+                   handler.post(new Runnable() {
+                       @Override
+                       public void run() {
+                           listSimpleResponseListener.onFailed(e.getMessage(),ErrorModel.HTTP_API_ERROR_CODE);
+                       }
+                   });
+               }
+            }
+        });
     }
 
 

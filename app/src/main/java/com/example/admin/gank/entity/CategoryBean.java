@@ -34,6 +34,18 @@ public class CategoryBean implements Parcelable {
     private boolean used;
     private String who;
     private List<String> images;
+    private int like;
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public CategoryBean() {
+    }
 
     protected CategoryBean(Parcel in) {
         _id = in.readString();

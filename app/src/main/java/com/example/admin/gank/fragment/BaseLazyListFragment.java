@@ -47,6 +47,8 @@ public abstract class BaseLazyListFragment extends LazyBaseFragment implements S
 
     private void initList(View rootView) {
         lv = (ListView) rootView.findViewById(R.id.lv);
+        lv.setAdapter(getAdapter());
+        lv.setOnItemClickListener(this);
         if(!isNoFooter){
             footerView = LayoutInflater.from(a).inflate(R.layout.footer_lv, null);
             loaddingView = footerView.findViewById(R.id.loaddingView);
@@ -56,9 +58,18 @@ public abstract class BaseLazyListFragment extends LazyBaseFragment implements S
             lv.addFooterView(footerView,null,false);
             lv.setOnScrollListener(this);
         }
-        lv.setAdapter(getAdapter());
-        lv.setOnItemClickListener(this);
     }
+    public void setFooterViewGone(){
+        if(footerView!=null){
+            footerView.setVisibility(View.GONE);
+        }
+    }
+     public void setFooterViewVisiable(){
+        if(footerView!=null){
+            footerView.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     protected abstract ListAdapter getAdapter();
 

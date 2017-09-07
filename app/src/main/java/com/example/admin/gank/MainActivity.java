@@ -1,5 +1,6 @@
 package com.example.admin.gank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,8 @@ import android.util.SparseArray;
 import android.view.MenuItem;
 
 import com.example.admin.gank.activity.BaseActivity;
+import com.example.admin.gank.activity.SearchActivity;
+import com.example.admin.gank.fragment.CollectionFragment;
 import com.example.admin.gank.fragment.HomeFragment;
 import com.example.admin.gank.fragment.RandomFragment;
 
@@ -23,11 +26,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     {
         map.put(R.id.homeMenu,new HomeFragment());
         map.put(R.id.randomMenu,new RandomFragment());
+        map.put(R.id.collectionMenu,new CollectionFragment());
     }
     private SparseArray<String> mapTitle=new SparseArray<>();
     {
         mapTitle.put(R.id.homeMenu,"首页");
         mapTitle.put(R.id.randomMenu,"随机");
+        mapTitle.put(R.id.collectionMenu,"收藏");
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +71,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
       switch (item.getItemId()){
           case R.id.homeMenu:
           case R.id.randomMenu:
+          case R.id.collectionMenu:
               drawer.closeDrawer(navitionView);
               replaceFragment(item.getItemId());
+              break;
+          case R.id.searchMenu:
+              startActivity(new Intent(this, SearchActivity.class));
               break;
       }
         return true;

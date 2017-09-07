@@ -16,7 +16,7 @@ import com.example.admin.gank.R;
  */
 
 public class BaseWebActivity extends BaseActivity implements View.OnClickListener {
-    private android.support.v7.widget.Toolbar toolbar;
+    protected android.support.v7.widget.Toolbar toolbar;
     private android.widget.ProgressBar pb;
     protected WebView web;
 
@@ -28,7 +28,10 @@ public class BaseWebActivity extends BaseActivity implements View.OnClickListene
         this.pb = (ProgressBar) findViewById(R.id.pb);
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(this);
-//        web.getSettings().setJavaScriptEnabled(true);// 支持javascript代码
+        web.getSettings().setJavaScriptEnabled(true);// 支持javascript代码
+        web.getSettings().setUseWideViewPort(true);
+        web.getSettings().setLoadWithOverviewMode(true);
+        web.getSettings().setSupportZoom(true);
         web.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

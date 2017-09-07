@@ -15,6 +15,6 @@ import retrofit2.http.Path;
  */
 
 public interface SearchService {
-    @GET("search/query/{keyword}/category/"+ HttpModel.CATEGORT_ALL+"/count/10/page/{page}")
+    @GET("search/query/{keyword}/category/"+ HttpModel.CATEGORT_ANDROID+"/count/10/page/{page}")
     Call<BaseBean<List<SearchBean>>> getSearchBean(@Path("keyword") String keyWord,@Path("page") int page );
 }
