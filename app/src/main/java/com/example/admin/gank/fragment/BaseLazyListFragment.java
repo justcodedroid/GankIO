@@ -18,7 +18,7 @@ import com.example.admin.gank.R;
 public abstract class BaseLazyListFragment extends LazyBaseFragment implements SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     protected SwipeRefreshLayout swip;
-    private ListView lv;
+    protected ListView lv;
     private  boolean isNoHead;
     private boolean isNoFooter;
     private View footerView;

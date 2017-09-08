@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    android:padding="5dp"
+    android:textSize="20sp"
+    android:id="@+id/descTv"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+</android.support.v7.widget.CardView>

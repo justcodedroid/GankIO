@@ -93,7 +93,6 @@ public class CollectionFragment extends BaseLazyListFragment implements SimpleRe
     @Override
     public void onFailed(String errorMsg, int errorCode) {
         Log.e("error",errorMsg+"");
-
         if(page==1){
             swip.setRefreshing(false);
             Toast.makeText(a, "下拉重试", Toast.LENGTH_SHORT).show();

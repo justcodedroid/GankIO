@@ -1,6 +1,8 @@
 package com.example.admin.gank.adapter;
 
 import android.content.Context;
+import android.database.DataSetObserver;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,13 @@ public abstract class SimpleBaseAdapter<T> extends BaseAdapter {
     @Override
     public abstract View getView(int position, View convertView, ViewGroup parent) ;
 
+    @Override
+    public void registerDataSetObserver(DataSetObserver observer) {
+        super.registerDataSetObserver(observer);
+        Log.e("tagasdsadsadThread",Thread.currentThread().getName());
+    }
+
+
     public Context getContext() {
         return context;
     }
@@ -49,6 +58,7 @@ public abstract class SimpleBaseAdapter<T> extends BaseAdapter {
             list.clear();
         }else {
             list.addAll(datas);
+            Log.e("ttag",getCount()+"-------------->"+Thread.currentThread().getName()+"------->"+getClass().getSimpleName());
             notifyDataSetChanged();
         }
 

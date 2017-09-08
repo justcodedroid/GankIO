@@ -15,6 +15,7 @@ import com.example.admin.gank.activity.BaseActivity;
 import com.example.admin.gank.activity.SearchActivity;
 import com.example.admin.gank.activity.SettingActivity;
 import com.example.admin.gank.fragment.CollectionFragment;
+import com.example.admin.gank.fragment.HistoryFragment;
 import com.example.admin.gank.fragment.HomeFragment;
 import com.example.admin.gank.fragment.RandomFragment;
 
@@ -28,12 +29,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         map.put(R.id.homeMenu,new HomeFragment());
         map.put(R.id.randomMenu,new RandomFragment());
         map.put(R.id.collectionMenu,new CollectionFragment());
+        map.put(R.id.historyMenu,new HistoryFragment());
     }
     private SparseArray<String> mapTitle=new SparseArray<>();
     {
         mapTitle.put(R.id.homeMenu,"首页");
         mapTitle.put(R.id.randomMenu,"随机");
         mapTitle.put(R.id.collectionMenu,"收藏");
+        mapTitle.put(R.id.historyMenu,"历史");
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
           case R.id.homeMenu:
           case R.id.randomMenu:
           case R.id.collectionMenu:
+          case R.id.historyMenu:
               drawer.closeDrawer(navitionView);
               replaceFragment(item.getItemId());
               break;

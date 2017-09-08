@@ -2,6 +2,7 @@ package com.example.admin.gank.http;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.example.admin.gank.MyApplication;
 import com.example.admin.gank.entity.BaseBean;
@@ -28,6 +29,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.internal.cache.*;
 import okhttp3.internal.cache.CacheInterceptor;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -40,7 +45,12 @@ public class HttpUtils {
     private static ExecutorService POOL= Executors.newSingleThreadExecutor();
     private static Handler handler=new Handler(Looper.getMainLooper());
     static {
-        OkHttpClient client = new OkHttpClient.Builder().cache(new Cache(new File(MyApplication.app.getExternalCacheDir(), "web"), 1024321421)).addNetworkInterceptor(new com.example.admin.gank.http.CacheInterceptor()).build();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override public void log(String message) {
+                Log.e("web---->",message);
+            }
+        });
+        OkHttpClient client = new OkHttpClient.Builder().cache(new Cache(new File(MyApplication.app.getExternalCacheDir(), "web"), 1024321421)).addNetworkInterceptor(logging).addNetworkInterceptor(new com.example.admin.gank.http.CacheInterceptor()).build();
         retrofit=new Retrofit.Builder().baseUrl(HttpModel.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
     }
     public static void getCategory(String category, int page, SimpleResponseListener<BaseBean<List<CategoryBean>>> listener){
@@ -52,8 +62,28 @@ public class HttpUtils {
     public static void getHistoryDate(SimpleResponseListener<BaseBean<List<String>>> listener){
         retrofit.create(HistoryService.class).getHistoryDate().enqueue(new SimpleCallBack<BaseBean<List<String>>>(listener));
     }
-    public static void getRawHistoryData(int year,int month,int day,SimpleResponseListener<BaseBean<ResponseBody>> listener) {
-        retrofit.create(HistoryService.class).getRawHistoryData(year,month,day).enqueue(new SimpleCallBack<BaseBean<ResponseBody>>(listener));
+    public static void getRawHistoryData(int year, int month, int day, final SimpleListener<ResponseBody> listener) {
+        retrofit.create(HistoryService.class).getRawHistoryData(year,month,day).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
+           handler.post(new Runnable() {
+               @Override
+               public void run() {
+                   listener.onSuccess(response.body());
+               }
+           });
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, final Throwable t) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onFailed(t.getMessage(),ErrorModel.HTTP_API_ERROR_CODE);
+                }
+            });
+            }
+        });
     }
     public static void getSearch(String keyword,int page, SimpleResponseListener<BaseBean<List<SearchBean>>> listener){
         retrofit.create(SearchService.class).getSearchBean(keyword,page).enqueue(new SimpleCallBack<BaseBean<List<SearchBean>>>(listener));
@@ -81,7 +111,10 @@ public class HttpUtils {
             }
         });
     }
-
+    public static  interface  SimpleListener<T>{
+        void onSuccess(T data);
+        void onFailed(String errorMsg, int errorCode);
+    }
 
 
 }

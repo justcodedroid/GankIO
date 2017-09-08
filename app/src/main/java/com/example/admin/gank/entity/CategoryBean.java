@@ -23,7 +23,7 @@ public class CategoryBean implements Parcelable {
      * used : true
      * who : Vivian
      */
-
+    private int itemType;
     private String _id;
     private String createdAt;
     private String desc;
@@ -35,6 +35,14 @@ public class CategoryBean implements Parcelable {
     private String who;
     private List<String> images;
     private int like;
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+    public int getItemType() {
+        return itemType;
+    }
 
     public int getLike() {
         return like;
