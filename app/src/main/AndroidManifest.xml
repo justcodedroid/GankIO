@@ -14,6 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.example.admin.gank.http.CustomDiskcacheMoudle"
+            android:value="GlideModule" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +27,11 @@
         </activity>
         <activity android:name=".activity.CategoryWebActivity" />
         <activity android:name=".activity.ImageActivity" />
-        <activity android:name=".activity.SearchActivity"
-            android:windowSoftInputMode="adjustNothing"
-            />
-        <activity android:name=".activity.SearchDeatilsWebActivity"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".activity.SearchDeatilsWebActivity" />
+        <activity android:name=".activity.SettingActivity"></activity>
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.admin.gank.activity.BaseActivity;
 import com.example.admin.gank.activity.SearchActivity;
+import com.example.admin.gank.activity.SettingActivity;
 import com.example.admin.gank.fragment.CollectionFragment;
 import com.example.admin.gank.fragment.HomeFragment;
 import com.example.admin.gank.fragment.RandomFragment;
@@ -77,6 +78,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
               break;
           case R.id.searchMenu:
               startActivity(new Intent(this, SearchActivity.class));
+              break;
+          case R.id.settingMenu:
+              startActivity(new Intent(this, SettingActivity.class));
               break;
       }
         return true;
